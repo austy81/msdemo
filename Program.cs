@@ -6,7 +6,9 @@ namespace ConsoleApplication
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var change = new Change();
+            var numberOfDenominations = change.MakeChange(222);
+            Console.WriteLine(numberOfDenominations);
         }
     }
 }
