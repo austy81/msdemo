@@ -1,0 +1,27 @@
+{
+    "buildOptions": {
+        "copyToOutput": {
+            "include": [ "xunit.runner.json" ]
+        }
+    },
+    "frameworks": {
+      "netcoreapp1.0": {
+        "dependencies": {
+          "Microsoft.NETCore.App": {
+            "type": "platform",
+            "version": "1.0.0"
+          }
+        },
+        "imports": "dnxcore50"
+      }
+    },
+    "testRunner": "xunit",
+    "dependencies": {
+        "xunit": "2.2.0-beta2-build3300",
+        "Change": {
+            "version": "1.0.1",
+            "target": "project"
+        }
+    }
+}
+

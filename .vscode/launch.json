@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": ".NET Core Launch (console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceRoot}/src/Change/bin/Debug/netcoreapp1.0/msdemo.dll",
+            "args": ["99"],
+            "cwd": "${workspaceRoot}/src/Change",
+            "externalConsole": false,
+            "stopAtEntry": false
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": 0
+        }
+    ]
+}
