@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-namespace ConsoleApplication
+namespace msdemo
 {
     public class Change
     {
@@ -32,7 +32,7 @@ namespace ConsoleApplication
                         denominationsCount.Add(denomination,1);
                 }
             }
-            if (remainingAmount > 0) throw new Exception("There are no denominations to cover the whole amount.");
+            if (remainingAmount > 0) throw new ArgumentException($"There are no suitable denominations to cover the whole amount. It is possible to use {denominationsCount.Sum(x=>x.Value)} bills and it remains amount {remainingAmount} which can not be covered by current denominations.");
             return denominationsCount;
         }
     }

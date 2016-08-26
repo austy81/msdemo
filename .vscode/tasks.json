@@ -10,5 +10,8 @@
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"
         }
-    ]
+    ],
+    "options":{
+        "cwd": "${workspaceRoot}/src/Change"
+    }
 }

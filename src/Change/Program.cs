@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Extensions.Configuration; 
 
 
-namespace ConsoleApplication
+namespace msdemo
 {
     public class Program
     {
@@ -30,12 +30,21 @@ namespace ConsoleApplication
                 Console.WriteLine($"For demo purpose it will be used number {amount}");
             }
             
-            var change = new Change(denominations);
-            var billsCount = change.MakeChange(amount);
-            
             Console.WriteLine($"If we have following amount of money: {amount}");
             Console.WriteLine($"And we have following bills: {denominationsString}");
-            Console.WriteLine($"This is smallest number of bills for given amount: {billsCount}");
+
+            var change = new Change(denominations);
+            int billsCount;
+            try
+            {
+                billsCount = change.MakeChange(amount);
+                Console.WriteLine($"This is smallest number of bills for given amount: {billsCount}");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
         }
     }
 
