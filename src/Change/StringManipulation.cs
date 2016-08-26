@@ -68,8 +68,8 @@ namespace msdemo
             for(int inputPosition = 0; inputPosition<inputString.Length; inputPosition++)
             {
                 int targetPosition = inputPosition + shift;
-                if(targetPosition > inputString.Length-1) targetPosition -= inputString.Length-1; //overfloated on the right should be moved to the left
-                if(targetPosition < 0) targetPosition += inputString.Length-1; //overfloated on the left should be moved to the right
+                while(targetPosition > inputString.Length-1) targetPosition -= inputString.Length; //overfloated on the right should be moved to the left
+                while(targetPosition < 0) targetPosition += inputString.Length; //overfloated on the left should be moved to the right
                 output[targetPosition] = inputString[inputPosition];
             }
             return output.ToString();
