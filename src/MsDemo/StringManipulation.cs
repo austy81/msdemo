@@ -10,16 +10,30 @@ namespace msdemo
             _inputString = inputString;
         }
 
-        public static string operator >> (StringManipulation input, int shift)
+        public string StringValue
         {
-            if(input.ToString() == null) return null;
-            return Shift(input.ToString(),shift);
+            get { 
+                return _inputString;
+            }
+            set {
+                _inputString = value;
+            }
+        }
+
+        public static StringManipulation operator << (StringManipulation input, int shift)
+        {
+            if(input == null) return input;
+            if(input.StringValue == null) return input;
+            input.StringValue = Shift(input.StringValue,shift); 
+            return input;
         } 
 
-        public static string operator << (StringManipulation input, int shift)
+        public static StringManipulation operator >> (StringManipulation input, int shift)
         {
-            if(input.ToString() == null) return null;
-            return Shift(input.ToString(),-shift);
+            if(input == null) return input;
+            if(input.StringValue == null) return input;
+            input.StringValue = Shift(input.StringValue,-shift); 
+            return input;
         }
         
         public static bool operator == (StringManipulation s, StringManipulation s2)
@@ -34,7 +48,7 @@ namespace msdemo
                 return false;
             }
 
-            return s.ToString() == s2.ToString();
+            return s.StringValue == s2.StringValue;
         }
 
         // operator != has to be overloaded in pair with == operator
@@ -62,13 +76,14 @@ namespace msdemo
             StringManipulation sm = (StringManipulation)obj;
             if(sm == null) return false;
 
-            return this.ToString().Equals(sm.ToString());
+            return this.StringValue == sm.StringValue;
         }
         
         public override int GetHashCode()
         {
             if(this == null) return 0;
-            return this.ToString().GetHashCode();
+            if(this.StringValue == null) return 0;
+            return this.StringValue.GetHashCode();
         }
 
         private static string Shift(string inputString, int shift)

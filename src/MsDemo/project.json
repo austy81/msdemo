@@ -1,7 +1,6 @@
 {
   "name": "MsDemo",
   "version": "1.0.0-*",
-  "testRunner": "xunit",
   "buildOptions": {
     "debugType": "portable",
     "emitEntryPoint": true

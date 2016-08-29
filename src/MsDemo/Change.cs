@@ -4,12 +4,15 @@ using System;
 
 namespace msdemo
 {
+    //This implementation works just for denomination sets where each next denomination
+    //is at least twice as big as previous
     public class Change
     {
-        IEnumerable<int> denominations_;
+        IEnumerable<int> _denominations;
         public Change (IEnumerable<int> denominations) {
             if(denominations.Count() < 1) throw new ArgumentException("At least one denomination is needed.");
-            denominations_ = denominations.OrderByDescending(x=>x);
+            //todo: check "twice as big"
+            _denominations = denominations.OrderByDescending(x=>x);
         }
         public int MakeChange(int amount)
         {
@@ -23,16 +26,14 @@ namespace msdemo
             var denominationsCount = new Dictionary<int,int>();
             var remainingAmount = amount;
 
-            foreach(int denomination in denominations_)
+            foreach(int denomination in _denominations)
             {
-                while(remainingAmount >= denomination)
-                { 
-                    remainingAmount -= denomination;
-                    if(denominationsCount.Keys.Any(x=>x == denomination))
-                        denominationsCount[denomination]++;
-                    else 
-                        denominationsCount.Add(denomination,1);
-                }
+                    int currentDenominationCount = remainingAmount / denomination;
+                    if(currentDenominationCount > 0)
+                    {
+                        remainingAmount -= denomination * currentDenominationCount;
+                        denominationsCount.Add(denomination,currentDenominationCount);
+                    }
             }
             if (remainingAmount > 0) throw new ArgumentException($"There are no suitable denominations to cover the whole amount. It is possible to use {denominationsCount.Sum(x=>x.Value)} bills and it remains amount {remainingAmount} which can not be covered by current denominations.");
             return denominationsCount;
