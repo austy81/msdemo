@@ -12,6 +12,6 @@
         }
     ],
     "options":{
-        "cwd": "${workspaceRoot}/src/Change"
+        "cwd": "${workspaceRoot}/src/MsDemo"
     }
 }

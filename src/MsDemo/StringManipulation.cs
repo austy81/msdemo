@@ -12,23 +12,40 @@ namespace msdemo
 
         public static string operator >> (StringManipulation input, int shift)
         {
+            if(input.ToString() == null) return null;
             return Shift(input.ToString(),shift);
         } 
 
         public static string operator << (StringManipulation input, int shift)
         {
+            if(input.ToString() == null) return null;
             return Shift(input.ToString(),-shift);
         }
         
-        public static bool operator == (StringManipulation s, int j)
+        public static bool operator == (StringManipulation s, StringManipulation s2)
         {
-            return true;
+            if (System.Object.ReferenceEquals(s, s2))
+            {
+                return true;
+            }
+
+            if (((object)s == null) || ((object)s2 == null))
+            {
+                return false;
+            }
+
+            return s.ToString() == s2.ToString();
         }
 
-        public static bool operator != (StringManipulation s, int j)
+        // operator != has to be overloaded in pair with == operator
+        // https://msdn.microsoft.com/en-us/library/8edha89s(v=vs.140).aspx
+        public static bool operator != (StringManipulation s, StringManipulation s2) 
         {
-            return false;
+            return !(s == s2);
         }
+
+        // public static string operator = (StringManipulation s) // this operator can not be overloaded
+        // https://msdn.microsoft.com/en-us/library/8edha89s(v=vs.140).aspx
 
         public override string ToString()
         {
@@ -37,29 +54,21 @@ namespace msdemo
 
         public override bool Equals (object obj)
         {
-            //
-            // See the full list of guidelines at
-            //   http://go.microsoft.com/fwlink/?LinkID=85237
-            // and also the guidance for operator== at
-            //   http://go.microsoft.com/fwlink/?LinkId=85238
-            //
-            
             if (obj == null || GetType() != obj.GetType())
             {
                 return false;
             }
             
-            // TODO: write your implementation of Equals() here
-            throw new System.NotImplementedException();
-            return base.Equals (obj);
+            StringManipulation sm = (StringManipulation)obj;
+            if(sm == null) return false;
+
+            return this.ToString().Equals(sm.ToString());
         }
         
-        // override object.GetHashCode
         public override int GetHashCode()
         {
-            // TODO: write your implementation of GetHashCode() here
-            throw new System.NotImplementedException();
-            return base.GetHashCode();
+            if(this == null) return 0;
+            return this.ToString().GetHashCode();
         }
 
         private static string Shift(string inputString, int shift)

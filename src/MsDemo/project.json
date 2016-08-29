@@ -1,5 +1,5 @@
 {
-  "name": "msdemo",
+  "name": "MsDemo",
   "version": "1.0.0-*",
   "testRunner": "xunit",
   "buildOptions": {

@@ -7,12 +7,13 @@ namespace msdemo
     public class Change
     {
         IEnumerable<int> denominations_;
-        public Change (IEnumerable<int> denomination) {
-            denominations_ = denomination;
+        public Change (IEnumerable<int> denominations) {
+            if(denominations.Count() < 1) throw new ArgumentException("At least one denomination is needed.");
+            denominations_ = denominations.OrderByDescending(x=>x);
         }
         public int MakeChange(int amount)
         {
-            if(amount < 0) throw new ArgumentException("Negative values can not be handled.");
+            if(amount < 0) throw new ArgumentException("Negative amounts can not be changed.");
             Dictionary<int,int> denominationsCount = GetDenominationsCounts(amount);
             return denominationsCount.Sum(x=>x.Value);
         }

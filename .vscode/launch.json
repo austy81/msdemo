@@ -6,9 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/src/Change/bin/Debug/netcoreapp1.0/msdemo.dll",
-            "args": ["99"],
-            "cwd": "${workspaceRoot}/src/Change",
+            "program": "${workspaceRoot}/src/MsDemo/bin/Debug/netcoreapp1.0/msdemo.dll",
+            "args": [],
+            "cwd": "${workspaceRoot}/src/MsDemo",
             "externalConsole": false,
             "stopAtEntry": false
         },
