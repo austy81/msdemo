@@ -65,11 +65,12 @@ namespace msdemo
         private static string Shift(string inputString, int shift)
         {
             var output = new StringBuilder();
-            for(int inputPosition = 0; inputPosition<inputString.Length; inputPosition++)
+            output.Append(inputString);
+            for(int inputPosition = 0; inputPosition < inputString.Length; inputPosition++)
             {
                 int targetPosition = inputPosition + shift;
-                while(targetPosition > inputString.Length-1) targetPosition -= inputString.Length; //overfloated on the right should be moved to the left
-                while(targetPosition < 0) targetPosition += inputString.Length; //overfloated on the left should be moved to the right
+                while(targetPosition > inputString.Length-1) targetPosition -= inputString.Length; //overfloated to the right should be moved to the left
+                while(targetPosition < 0) targetPosition += inputString.Length; //overfloated to the left should be moved to the right
                 output[targetPosition] = inputString[inputPosition];
             }
             return output.ToString();

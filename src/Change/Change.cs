@@ -12,8 +12,9 @@ namespace msdemo
         }
         public int MakeChange(int amount)
         {
-           Dictionary<int,int> denominationsCount = GetDenominationsCounts(amount);
-           return denominationsCount.Sum(x=>x.Value);
+            if(amount < 0) throw new ArgumentException("Negative values can not be handled.");
+            Dictionary<int,int> denominationsCount = GetDenominationsCounts(amount);
+            return denominationsCount.Sum(x=>x.Value);
         }
 
         internal protected Dictionary<int,int> GetDenominationsCounts(int amount)

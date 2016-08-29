@@ -23,6 +23,8 @@ namespace msdemotest
         [InlineData("AB",10,"AB")]
         [InlineData("AB",11,"BA")]
         [InlineData("ABC",3,"ABC")]
+        [InlineData("ABC",-3,"ABC")]
+        [InlineData("ABC",-1,"CAB")]
         public void ShiftLeft(string input, int shift, string expectedOutput) 
         {
             var sm = new StringManipulation(input);

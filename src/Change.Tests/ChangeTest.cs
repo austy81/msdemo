@@ -40,5 +40,17 @@ namespace msdemotest
             Assert.IsType<ArgumentException>(ex);
             Assert.Equal($"There are no suitable denominations to cover the whole amount. It is possible to use {resultBills} bills and it remains amount {remainingAmount} which can not be covered by current denominations.", ex.Message);
         }
+
+        [Theory]
+        [InlineData(-1)]
+        public void MakeChangeThrowsExceptionForNegativeAmount(int amount)
+        {
+            Change _change = new Change(new int[] {100,50,20,10,5,1});
+
+            Exception ex = Assert.Throws<ArgumentException>(() => _change.MakeChange(amount));
+            Assert.NotNull(ex);
+            Assert.IsType<ArgumentException>(ex);
+            Assert.Equal("Negative values can not be handled.", ex.Message);
+        }
     }
 }
