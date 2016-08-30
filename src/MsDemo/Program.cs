@@ -40,15 +40,22 @@ namespace msdemo
             }
 
             ////////////////////// StringManipulation Demo //////////////////////
-            var a = new StringManipulation("Microsoft");
-            var b = new StringManipulation("MS");
+            var aString = "Microsoft";
+            var bString = "MS";
+            var a = new StringManipulation(aString);
+            var b = new StringManipulation(bString);
             Random rndShift = new Random();
             int shift = rndShift.Next(1,5);
 
             Console.WriteLine("");
             Console.WriteLine("StringManipulation demo:");
-            Console.WriteLine($"'{a}' >> {shift} = '{a >> shift}'");
-            Console.WriteLine($"'{a}' << {shift} = '{a << shift}'");
+            var aRight = new StringManipulation(aString) >> shift;
+            Console.WriteLine($"'{aString}' >> {shift} = '{aRight}'");
+            var aLeft = new StringManipulation(aString) << shift;
+            var aLeftString = aLeft.ToString();
+            Console.WriteLine($"'{a}' << {shift} = '{aLeft}'");
+            var aRef = aLeft << shift;
+            Console.WriteLine($"'{aLeftString}' << {shift} = '{aRef}'");
             Console.WriteLine($"'{a}' == '{b}' = '{a == b}'");
             Console.WriteLine($"'{a}' != '{b}' = '{a != b}'");
         }

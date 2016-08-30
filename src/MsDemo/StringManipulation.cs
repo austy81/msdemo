@@ -4,27 +4,19 @@ namespace msdemo
 {
     public class StringManipulation
     {
-        string _inputString;
+        private readonly string _inputString;
+        private int _offset;
         public StringManipulation(string inputString)
         {
             _inputString = inputString;
-        }
-
-        public string StringValue
-        {
-            get { 
-                return _inputString;
-            }
-            set {
-                _inputString = value;
-            }
+            _offset = 0;
         }
 
         public static StringManipulation operator << (StringManipulation input, int shift)
         {
             if(input == null) return input;
             if(input.StringValue == null) return input;
-            input.StringValue = Shift(input.StringValue,shift); 
+            input.AddOffset(shift); 
             return input;
         } 
 
@@ -32,7 +24,7 @@ namespace msdemo
         {
             if(input == null) return input;
             if(input.StringValue == null) return input;
-            input.StringValue = Shift(input.StringValue,-shift); 
+            input.AddOffset(-shift); 
             return input;
         }
         
@@ -63,7 +55,7 @@ namespace msdemo
 
         public override string ToString()
         {
-            return _inputString;
+            return StringValue;
         }
 
         public override bool Equals (object obj)
@@ -85,9 +77,15 @@ namespace msdemo
             if(this.StringValue == null) return 0;
             return this.StringValue.GetHashCode();
         }
-
+        private string StringValue
+        {
+            get { 
+                return Shift(_inputString,_offset);
+            }
+        }
         private static string Shift(string inputString, int shift)
         {
+            if(inputString == null) return null;
             var output = new StringBuilder();
             output.Append(inputString);
             for(int inputPosition = 0; inputPosition < inputString.Length; inputPosition++)
@@ -98,6 +96,10 @@ namespace msdemo
                 output[targetPosition] = inputString[inputPosition];
             }
             return output.ToString();
+        }
+        private void AddOffset(int shift)
+        {
+            _offset += shift;
         }
     }
 }

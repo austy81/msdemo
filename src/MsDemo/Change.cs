@@ -4,39 +4,47 @@ using System;
 
 namespace msdemo
 {
-    //This implementation works just for denomination sets where each next denomination
+    //This implementation works just for note sets where each next note
     //is at least twice as big as previous
     public class Change
     {
-        IEnumerable<int> _denominations;
-        public Change (IEnumerable<int> denominations) {
-            if(denominations.Count() < 1) throw new ArgumentException("At least one denomination is needed.");
-            //todo: check "twice as big"
-            _denominations = denominations.OrderByDescending(x=>x);
+        private static IEnumerable<int> _availableNotes;
+        public Change (IEnumerable<int> availableNotes) {
+            checkAvailableNotes(availableNotes);
+            _availableNotes = availableNotes.OrderByDescending(x=>x);
+        }
+
+        private void checkAvailableNotes(IEnumerable<int> availableNotes)
+        {
+            if(availableNotes.Count() < 1) throw new ArgumentException("At least one note is needed.");
+            availableNotes = availableNotes.OrderByDescending(x=>x);
+            int? previousnote = null;
+
+            foreach (var currentnote in availableNotes)
+            {
+                if(currentnote < 1) throw new ArgumentException("Each note has to have value greater than 0.");
+                if(previousnote==null)
+                {
+                    previousnote = currentnote;
+                    continue;
+                }
+                if(previousnote < currentnote * 2) throw new ArgumentException("Each note sorted by value needs to be at least twice as big as previous.");
+                previousnote = currentnote;
+            }
         }
         public int MakeChange(int amount)
         {
             if(amount < 0) throw new ArgumentException("Negative amounts can not be changed.");
-            Dictionary<int,int> denominationsCount = GetDenominationsCounts(amount);
-            return denominationsCount.Sum(x=>x.Value);
-        }
-
-        internal protected Dictionary<int,int> GetDenominationsCounts(int amount)
-        {
-            var denominationsCount = new Dictionary<int,int>();
             var remainingAmount = amount;
-
-            foreach(int denomination in _denominations)
+            int notesCount = 0;
+            foreach(int note in _availableNotes)
             {
-                    int currentDenominationCount = remainingAmount / denomination;
-                    if(currentDenominationCount > 0)
-                    {
-                        remainingAmount -= denomination * currentDenominationCount;
-                        denominationsCount.Add(denomination,currentDenominationCount);
-                    }
+                    int currentnoteCount = remainingAmount / note;
+                    remainingAmount -= note * currentnoteCount;
+                    notesCount += currentnoteCount;
             }
-            if (remainingAmount > 0) throw new ArgumentException($"There are no suitable denominations to cover the whole amount. It is possible to use {denominationsCount.Sum(x=>x.Value)} bills and it remains amount {remainingAmount} which can not be covered by current denominations.");
-            return denominationsCount;
+            if (remainingAmount > 0) throw new ArgumentException($"There are no suitable notes to cover the whole amount. It is possible to use {notesCount} bills and it remains amount {remainingAmount} which can not be covered by current notes.");
+            return notesCount;
         }
     }
 }
