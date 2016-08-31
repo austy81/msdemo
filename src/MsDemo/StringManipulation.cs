@@ -86,17 +86,18 @@ namespace msdemo
         private static string Shift(string inputString, int shift)
         {
             if(inputString == null) return null;
-            var output = new StringBuilder();
-            output.Append(inputString);
-            for(int inputPosition = 0; inputPosition < inputString.Length; inputPosition++)
-            {
-                int targetPosition = inputPosition + shift;
-                while(targetPosition > inputString.Length-1) targetPosition -= inputString.Length; //overfloated to the right should be moved to the left
-                while(targetPosition < 0) targetPosition += inputString.Length; //overfloated to the left should be moved to the right
-                output[targetPosition] = inputString[inputPosition];
-            }
-            return output.ToString();
+            if(inputString.Length == 0) return string.Empty;
+
+            int breakPoint = inputString.Length - NormaliseShift(shift,inputString.Length); 
+            return inputString.Substring(breakPoint) + inputString.Substring(0,breakPoint);
         }
+        private static int NormaliseShift(int shift, int stringLength)
+        {
+            int normalisedShift = shift;
+            if(shift > stringLength-1) normalisedShift -= stringLength * (shift / stringLength); 
+            if(shift < 0) normalisedShift += stringLength * ((-shift / stringLength) + 1);
+            return normalisedShift;
+        } 
         private void AddOffset(int shift)
         {
             _offset += shift;

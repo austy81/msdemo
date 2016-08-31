@@ -7,6 +7,7 @@ namespace msdemotest
     {
         [Theory]
         [InlineData("ABC",1,"CAB")]
+        [InlineData("ABC",1000000000,"CAB")]
         [InlineData("A",10,"A")]
         [InlineData("AB",10,"AB")]
         [InlineData("AB",11,"BA")]
@@ -25,6 +26,7 @@ namespace msdemotest
 
         [Theory]
         [InlineData("ABC",1,"BCA")]
+        [InlineData("ABC",1000000000,"BCA")]
         [InlineData("A",10,"A")]
         [InlineData("AB",10,"AB")]
         [InlineData("AB",11,"BA")]
